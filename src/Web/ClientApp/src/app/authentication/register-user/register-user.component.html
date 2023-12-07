@@ -1,0 +1,48 @@
+<div class="card">
+  <div class="card-body">
+    <h1 class="card-title">Register</h1>
+
+    <div *ngIf="showError" class="alert alert-danger" role="alert">
+      <span [innerHTML]="errorMessage"></span>
+    </div>
+
+    <form (ngSubmit)="registerUser()" [formGroup]="registerForm" autocomplete="off" novalidate>
+      <div class="form-group row">
+        <label class="col-form-label col-sm-2" for="firstName">First Name:</label>
+        <div class="col-md-5">
+          <input class="form-control" formControlName="firstName" id="firstName" type="text"/>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-form-label col-sm-2" for="lastName">Last Name:</label>
+        <div class="col-md-5">
+          <input class="form-control" formControlName="lastName" id="lastName" type="text"/>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-form-label col-sm-2" for="email">Email:</label>
+        <div class="col-md-5">
+          <input class="form-control" formControlName="email" id="email" type="email"/>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-form-label col-sm-2" for="password">Password:</label>
+        <div class="col-md-5">
+          <input class="form-control" formControlName="password" id="password" type="password"/>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-form-label col-sm-2" for="confirm">Confirm Password:</label>
+        <div class="col-md-5">
+          <input class="form-control" formControlName="confirm" id="confirm" type="password"/>
+        </div>
+      </div>
+      <br>
+      <div class="form-group row">
+        <div class="col-md-1">
+          <button class="btn btn-info" type="submit">Register</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
