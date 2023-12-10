@@ -1,6 +1,10 @@
-﻿using TheHub.Application.Common.Interfaces;
+﻿#region
+
+using TheHub.Application.Common.Interfaces;
 using TheHub.Domain.Entities;
 using TheHub.Domain.Events;
+
+#endregion
 
 namespace TheHub.Application.TodoItems.Commands.CreateTodoItem;
 
@@ -22,12 +26,7 @@ public class CreateTodoItemCommandHandler : IRequestHandler<CreateTodoItemComman
 
     public async Task<int> Handle(CreateTodoItemCommand request, CancellationToken cancellationToken)
     {
-        var entity = new TodoItem
-        {
-            ListId = request.ListId,
-            Title = request.Title,
-            Done = false
-        };
+        TodoItem entity = new TodoItem { ListId = request.ListId, Title = request.Title, Done = false };
 
         entity.AddDomainEvent(new TodoItemCreatedEvent(entity));
 

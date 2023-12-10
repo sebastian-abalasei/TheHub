@@ -1,9 +1,16 @@
-import { Component, TemplateRef, OnInit } from '@angular/core';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { TodoListsClient, TodoItemsClient,
-  TodoListDto, TodoItemDto, LookupDto,
-  CreateTodoListCommand, UpdateTodoListCommand,
-  CreateTodoItemCommand, UpdateTodoItemCommand, UpdateTodoItemDetailCommand
+import {Component, OnInit, TemplateRef} from '@angular/core';
+import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
+import {
+  CreateTodoItemCommand,
+  CreateTodoListCommand,
+  LookupDto,
+  TodoItemDto,
+  TodoItemsClient,
+  TodoListDto,
+  TodoListsClient,
+  UpdateTodoItemCommand,
+  UpdateTodoItemDetailCommand,
+  UpdateTodoListCommand
 } from '../web-api-client';
 
 @Component({
@@ -29,9 +36,10 @@ export class TodoComponent implements OnInit {
     private listsClient: TodoListsClient,
     private itemsClient: TodoItemsClient,
     private modalService: BsModalService
-  ) {}
+  ) {
+  }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.listsClient.getTodoLists().subscribe(
       result => {
         this.lists = result.lists;
@@ -49,17 +57,17 @@ export class TodoComponent implements OnInit {
     return list.items.filter(t => !t.done).length;
   }
 
-  showNewListModal(template: TemplateRef<any>): void {
+  showNewListModal(template: TemplateRef<any>) {
     this.newListModalRef = this.modalService.show(template);
     setTimeout(() => document.getElementById('title').focus(), 250);
   }
 
-  newListCancelled(): void {
+  newListCancelled() {
     this.newListModalRef.hide();
     this.newListEditor = {};
   }
 
-  addList(): void {
+  addList() {
     const list = {
       id: 0,
       title: this.newListEditor.title,
@@ -112,7 +120,7 @@ export class TodoComponent implements OnInit {
     this.deleteListModalRef = this.modalService.show(template);
   }
 
-  deleteListConfirmed(): void {
+  deleteListConfirmed() {
     this.listsClient.deleteTodoList(this.selectedList.id).subscribe(
       () => {
         this.deleteListModalRef.hide();
@@ -124,7 +132,7 @@ export class TodoComponent implements OnInit {
   }
 
   // Items
-  showItemDetailsModal(template: TemplateRef<any>, item: TodoItemDto): void {
+  showItemDetailsModal(template: TemplateRef<any>, item: TodoItemDto) {
     this.selectedItem = item;
     this.itemDetailsEditor = {
       ...this.selectedItem
@@ -133,7 +141,7 @@ export class TodoComponent implements OnInit {
     this.itemDetailsModalRef = this.modalService.show(template);
   }
 
-  updateItemDetails(): void {
+  updateItemDetails() {
     const item = this.itemDetailsEditor as UpdateTodoItemDetailCommand;
     this.itemsClient.updateTodoItemDetail(this.selectedItem.id, item).subscribe(
       () => {
@@ -171,12 +179,12 @@ export class TodoComponent implements OnInit {
     this.editItem(item, 'itemTitle' + index);
   }
 
-  editItem(item: TodoItemDto, inputId: string): void {
+  editItem(item: TodoItemDto, inputId: string) {
     this.selectedItem = item;
     setTimeout(() => document.getElementById(inputId).focus(), 100);
   }
 
-  updateItem(item: TodoItemDto, pressedEnter: boolean = false): void {
+  updateItem(item: TodoItemDto, pressedEnter = false) {
     const isNewItem = item.id === 0;
 
     if (!item.title.trim()) {
@@ -186,7 +194,7 @@ export class TodoComponent implements OnInit {
 
     if (item.id === 0) {
       this.itemsClient
-          .createTodoItem({ title: item.title, listId: this.selectedList.id } as CreateTodoItemCommand)
+        .createTodoItem({title: item.title, listId: this.selectedList.id} as CreateTodoItemCommand)
         .subscribe(
           result => {
             item.id = result;
@@ -194,7 +202,7 @@ export class TodoComponent implements OnInit {
           error => console.error(error)
         );
     } else {
-        this.itemsClient.updateTodoItem(item.id, item as UpdateTodoItemCommand).subscribe(
+      this.itemsClient.updateTodoItem(item.id, item as UpdateTodoItemCommand).subscribe(
         () => console.log('Update succeeded.'),
         error => console.error(error)
       );
@@ -218,9 +226,9 @@ export class TodoComponent implements OnInit {
     } else {
       this.itemsClient.deleteTodoItem(item.id).subscribe(
         () =>
-          (this.selectedList.items = this.selectedList.items.filter(
+          this.selectedList.items = this.selectedList.items.filter(
             t => t.id !== item.id
-          )),
+          ),
         error => console.error(error)
       );
     }

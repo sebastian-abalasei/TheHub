@@ -1,15 +1,19 @@
-﻿using System.Data;
+﻿#region
+
+using System.Data;
 using System.Data.Common;
-using TheHub.Infrastructure.Data;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using TheHub.Infrastructure.Data;
+
+#endregion
 
 namespace TheHub.Application.FunctionalTests;
 
 public class SqliteTestDatabase : ITestDatabase
 {
-    private readonly string _connectionString;
     private readonly SqliteConnection _connection;
+    private readonly string _connectionString;
 
     public SqliteTestDatabase()
     {
@@ -26,11 +30,11 @@ public class SqliteTestDatabase : ITestDatabase
 
         await _connection.OpenAsync();
 
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+        DbContextOptions<ApplicationDbContext> options = new DbContextOptionsBuilder<ApplicationDbContext>()
             .UseSqlite(_connection)
             .Options;
 
-        var context = new ApplicationDbContext(options);
+        ApplicationDbContext context = new ApplicationDbContext(options);
 
         context.Database.Migrate();
     }

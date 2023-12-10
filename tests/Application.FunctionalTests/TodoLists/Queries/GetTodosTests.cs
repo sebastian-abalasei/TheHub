@@ -1,10 +1,18 @@
-﻿using TheHub.Application.TodoLists.Queries.GetTodos;
+﻿#region
+
+using TheHub.Application.TodoLists.Queries.GetTodos;
 using TheHub.Domain.Entities;
 using TheHub.Domain.ValueObjects;
 
+#endregion
+
 namespace TheHub.Application.FunctionalTests.TodoLists.Queries;
 
+#region
+
 using static Testing;
+
+#endregion
 
 public class GetTodosTests : BaseTestFixture
 {
@@ -13,9 +21,9 @@ public class GetTodosTests : BaseTestFixture
     {
         await RunAsDefaultUserAsync();
 
-        var query = new GetTodosQuery();
+        GetTodosQuery query = new GetTodosQuery();
 
-        var result = await SendAsync(query);
+        TodosVm result = await SendAsync(query);
 
         result.PriorityLevels.Should().NotBeEmpty();
     }
@@ -30,20 +38,20 @@ public class GetTodosTests : BaseTestFixture
             Title = "Shopping",
             Colour = Colour.Blue,
             Items =
-                    {
-                        new TodoItem { Title = "Apples", Done = true },
-                        new TodoItem { Title = "Milk", Done = true },
-                        new TodoItem { Title = "Bread", Done = true },
-                        new TodoItem { Title = "Toilet paper" },
-                        new TodoItem { Title = "Pasta" },
-                        new TodoItem { Title = "Tissues" },
-                        new TodoItem { Title = "Tuna" }
-                    }
+            {
+                new TodoItem { Title = "Apples", Done = true },
+                new TodoItem { Title = "Milk", Done = true },
+                new TodoItem { Title = "Bread", Done = true },
+                new TodoItem { Title = "Toilet paper" },
+                new TodoItem { Title = "Pasta" },
+                new TodoItem { Title = "Tissues" },
+                new TodoItem { Title = "Tuna" }
+            }
         });
 
-        var query = new GetTodosQuery();
+        GetTodosQuery query = new GetTodosQuery();
 
-        var result = await SendAsync(query);
+        TodosVm result = await SendAsync(query);
 
         result.Lists.Should().HaveCount(1);
         result.Lists.First().Items.Should().HaveCount(7);
@@ -52,10 +60,10 @@ public class GetTodosTests : BaseTestFixture
     [Test]
     public async Task ShouldDenyAnonymousUser()
     {
-        var query = new GetTodosQuery();
+        GetTodosQuery query = new GetTodosQuery();
 
-        var action = () => SendAsync(query);
-        
+        Func<Task<TodosVm>> action = () => SendAsync(query);
+
         await action.Should().ThrowAsync<UnauthorizedAccessException>();
     }
 }

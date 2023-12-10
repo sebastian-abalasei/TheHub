@@ -28,12 +28,12 @@ export class LoginComponent implements OnInit {
   constructor(private _usersClient: UsersClient, private _router: Router, private _authState: AuthState, private _route: ActivatedRoute) {
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
 
     this._returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  reloadPage(): void {
+  reloadPage() {
     window.location.reload();
   }
 
@@ -41,19 +41,19 @@ export class LoginComponent implements OnInit {
     const userForAuth: ILoginRequest = {
       email: this.loginFormControl.get("email")?.value,
       password: this.loginFormControl.get("password")?.value
-    }
+    };
     this._usersClient.postApiUsersLogin(true, false, new LoginRequest(userForAuth)).pipe(
       // it's better to pipe catchError
-      catchError((error) => {
+      catchError(error => {
         console.log(error);
         return throwError(() => error);
       })
     )
       .subscribe({
-        next: (result) => {
+        next: result =>
           this._usersClient.getApiUsersManageInfo().pipe(
             // redirect to dashbaord
-            catchError((error) => {
+            catchError(error => {
               console.log(error);
               return throwError(() => error);
             })
@@ -66,8 +66,7 @@ export class LoginComponent implements OnInit {
                 );
               }
             }
-          )
-        },
+          ),
       })
   }
 }

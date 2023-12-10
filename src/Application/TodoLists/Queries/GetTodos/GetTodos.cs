@@ -1,7 +1,11 @@
-﻿using TheHub.Application.Common.Interfaces;
+﻿#region
+
+using TheHub.Application.Common.Interfaces;
 using TheHub.Application.Common.Models;
 using TheHub.Application.Common.Security;
 using TheHub.Domain.Enums;
+
+#endregion
 
 namespace TheHub.Application.TodoLists.Queries.GetTodos;
 
@@ -27,7 +31,6 @@ public class GetTodosQueryHandler : IRequestHandler<GetTodosQuery, TodosVm>
                 .Cast<PriorityLevel>()
                 .Select(p => new LookupDto { Id = (int)p, Title = p.ToString() })
                 .ToList(),
-
             Lists = await _context.TodoLists
                 .AsNoTracking()
                 .ProjectTo<TodoListDto>(_mapper.ConfigurationProvider)

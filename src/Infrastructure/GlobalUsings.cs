@@ -1,1 +1,5 @@
-﻿global using Ardalis.GuardClauses;
+﻿#region
+
+global using Ardalis.GuardClauses;
+
+#endregion

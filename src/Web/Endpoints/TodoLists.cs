@@ -1,7 +1,11 @@
-﻿using TheHub.Application.TodoLists.Commands.CreateTodoList;
+﻿#region
+
+using TheHub.Application.TodoLists.Commands.CreateTodoList;
 using TheHub.Application.TodoLists.Commands.DeleteTodoList;
 using TheHub.Application.TodoLists.Commands.UpdateTodoList;
 using TheHub.Application.TodoLists.Queries.GetTodos;
+
+#endregion
 
 namespace TheHub.Web.Endpoints;
 
@@ -29,7 +33,11 @@ public class TodoLists : EndpointGroupBase
 
     public async Task<IResult> UpdateTodoList(ISender sender, int id, UpdateTodoListCommand command)
     {
-        if (id != command.Id) return Results.BadRequest();
+        if (id != command.Id)
+        {
+            return Results.BadRequest();
+        }
+
         await sender.Send(command);
         return Results.NoContent();
     }

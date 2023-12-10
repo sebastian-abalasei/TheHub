@@ -1,9 +1,13 @@
-﻿using TheHub.Application.Common.Models;
+﻿#region
+
+using TheHub.Application.Common.Models;
 using TheHub.Application.TodoItems.Commands.CreateTodoItem;
 using TheHub.Application.TodoItems.Commands.DeleteTodoItem;
 using TheHub.Application.TodoItems.Commands.UpdateTodoItem;
 using TheHub.Application.TodoItems.Commands.UpdateTodoItemDetail;
 using TheHub.Application.TodoItems.Queries.GetTodoItemsWithPagination;
+
+#endregion
 
 namespace TheHub.Web.Endpoints;
 
@@ -20,7 +24,8 @@ public class TodoItems : EndpointGroupBase
             .MapDelete(DeleteTodoItem, "{id}");
     }
 
-    public async Task<PaginatedList<TodoItemBriefDto>> GetTodoItemsWithPagination(ISender sender, [AsParameters] GetTodoItemsWithPaginationQuery query)
+    public async Task<PaginatedList<TodoItemBriefDto>> GetTodoItemsWithPagination(ISender sender,
+        [AsParameters] GetTodoItemsWithPaginationQuery query)
     {
         return await sender.Send(query);
     }
@@ -32,14 +37,22 @@ public class TodoItems : EndpointGroupBase
 
     public async Task<IResult> UpdateTodoItem(ISender sender, int id, UpdateTodoItemCommand command)
     {
-        if (id != command.Id) return Results.BadRequest();
+        if (id != command.Id)
+        {
+            return Results.BadRequest();
+        }
+
         await sender.Send(command);
         return Results.NoContent();
     }
 
     public async Task<IResult> UpdateTodoItemDetail(ISender sender, int id, UpdateTodoItemDetailCommand command)
     {
-        if (id != command.Id) return Results.BadRequest();
+        if (id != command.Id)
+        {
+            return Results.BadRequest();
+        }
+
         await sender.Send(command);
         return Results.NoContent();
     }

@@ -1,6 +1,10 @@
-﻿using TheHub.Application.Common.Interfaces;
+﻿#region
+
+using TheHub.Application.Common.Interfaces;
 using TheHub.Application.Common.Security;
 using TheHub.Domain.Constants;
+
+#endregion
 
 namespace TheHub.Application.TodoLists.Commands.PurgeTodoLists;
 

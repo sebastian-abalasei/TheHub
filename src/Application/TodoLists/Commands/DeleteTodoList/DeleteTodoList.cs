@@ -1,4 +1,9 @@
-﻿using TheHub.Application.Common.Interfaces;
+﻿#region
+
+using TheHub.Application.Common.Interfaces;
+using TheHub.Domain.Entities;
+
+#endregion
 
 namespace TheHub.Application.TodoLists.Commands.DeleteTodoList;
 
@@ -15,7 +20,7 @@ public class DeleteTodoListCommandHandler : IRequestHandler<DeleteTodoListComman
 
     public async Task Handle(DeleteTodoListCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _context.TodoLists
+        TodoList? entity = await _context.TodoLists
             .Where(l => l.Id == request.Id)
             .SingleOrDefaultAsync(cancellationToken);
 

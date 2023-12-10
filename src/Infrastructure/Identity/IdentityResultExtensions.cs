@@ -1,5 +1,9 @@
-﻿using TheHub.Application.Common.Models;
+﻿#region
+
 using Microsoft.AspNetCore.Identity;
+using TheHub.Application.Common.Models;
+
+#endregion
 
 namespace TheHub.Infrastructure.Identity;
 

@@ -22,7 +22,7 @@ export class ErrorHandlerService implements HttpInterceptor {
       )
   }
 
-  private handleError = (error: HttpErrorResponse): string => {
+  private handleError = (error: HttpErrorResponse) => {
     if (error.status === 404) {
       return this.handleNotFound(error);
     } else if (error.status === 400) {
@@ -32,7 +32,7 @@ export class ErrorHandlerService implements HttpInterceptor {
     } else {
       return '';
     }
-  }
+  };
 
   private handleUnauthorized = (error: HttpErrorResponse) => {
     if (this._router.url === '/authentication/login') {
@@ -41,12 +41,12 @@ export class ErrorHandlerService implements HttpInterceptor {
       this._router.navigate(['/authentication/login']);
       return error.message;
     }
-  }
+  };
 
   private handleNotFound = (error: HttpErrorResponse): string => {
     this._router.navigate(['/404']);
     return error.message;
-  }
+  };
 
   private handleBadRequest = (error: HttpErrorResponse): string => {
     if (this._router.url === '/authentication/register') {
@@ -56,7 +56,7 @@ export class ErrorHandlerService implements HttpInterceptor {
         (m: string) => {
           message += m + '<br>';
         }
-      )
+      );
 
       return message.slice(0, -4);
     } else {

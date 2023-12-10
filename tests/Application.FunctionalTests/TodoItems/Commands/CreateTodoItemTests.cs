@@ -1,18 +1,26 @@
-﻿using TheHub.Application.Common.Exceptions;
+﻿#region
+
+using TheHub.Application.Common.Exceptions;
 using TheHub.Application.TodoItems.Commands.CreateTodoItem;
 using TheHub.Application.TodoLists.Commands.CreateTodoList;
 using TheHub.Domain.Entities;
 
+#endregion
+
 namespace TheHub.Application.FunctionalTests.TodoItems.Commands;
 
+#region
+
 using static Testing;
+
+#endregion
 
 public class CreateTodoItemTests : BaseTestFixture
 {
     [Test]
     public async Task ShouldRequireMinimumFields()
     {
-        var command = new CreateTodoItemCommand();
+        CreateTodoItemCommand command = new CreateTodoItemCommand();
 
         await FluentActions.Invoking(() =>
             SendAsync(command)).Should().ThrowAsync<ValidationException>();
@@ -21,22 +29,15 @@ public class CreateTodoItemTests : BaseTestFixture
     [Test]
     public async Task ShouldCreateTodoItem()
     {
-        var userId = await RunAsDefaultUserAsync();
+        string userId = await RunAsDefaultUserAsync();
 
-        var listId = await SendAsync(new CreateTodoListCommand
-        {
-            Title = "New List"
-        });
+        int listId = await SendAsync(new CreateTodoListCommand { Title = "New List" });
 
-        var command = new CreateTodoItemCommand
-        {
-            ListId = listId,
-            Title = "Tasks"
-        };
+        CreateTodoItemCommand command = new CreateTodoItemCommand { ListId = listId, Title = "Tasks" };
 
-        var itemId = await SendAsync(command);
+        int itemId = await SendAsync(command);
 
-        var item = await FindAsync<TodoItem>(itemId);
+        TodoItem? item = await FindAsync<TodoItem>(itemId);
 
         item.Should().NotBeNull();
         item!.ListId.Should().Be(command.ListId);

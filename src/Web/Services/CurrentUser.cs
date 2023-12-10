@@ -1,6 +1,9 @@
-﻿using System.Security.Claims;
+﻿#region
 
+using System.Security.Claims;
 using TheHub.Application.Common.Interfaces;
+
+#endregion
 
 namespace TheHub.Web.Services;
 

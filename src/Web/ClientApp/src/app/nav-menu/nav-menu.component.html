@@ -1,54 +1,59 @@
 <header>
+
+
+
   <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
     <div class="container">
-      <a class="navbar-brand" [routerLink]="['/']">TheCrowd.Web</a>
+      <a [routerLink]="['/']" class="navbar-brand">TheCrowd.Web</a>
       <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target=".navbar-collapse"
-        aria-label="Toggle navigation"
-        [attr.aria-expanded]="isExpanded"
         (click)="toggle()"
+        [attr.aria-expanded]="isExpanded"
+        aria-label="Toggle navigation"
+        class="navbar-toggler"
+        data-target=".navbar-collapse"
+        data-toggle="collapse"
+        type="button"
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end"
-           [ngClass]="{ show: isExpanded }">
+      <div [ngClass]="{ show: isExpanded }"
+           class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
         <ul class="navbar-nav flex-grow">
-          <li class="nav-item"
+          <li [routerLinkActiveOptions]="{ exact: true }"
               [routerLinkActive]="['link-active']"
-              [routerLinkActiveOptions]="{ exact: true }">
-            <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
+              class="nav-item">
+            <a [routerLink]="['/']" class="nav-link text-dark">Home</a>
           </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/counter']">Counter</a>
+          <li [routerLinkActive]="['link-active']" class="nav-item">
+            <a [routerLink]="['/counter']" class="nav-link text-dark">Counter</a>
           </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/fetch-data']">Fetch data</a>
+          <li [routerLinkActive]="['link-active']" class="nav-item">
+            <a [routerLink]="['/fetch-data']" class="nav-link text-dark">Fetch data</a>
           </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/todo']">Todo</a>
+          <li [routerLinkActive]="['link-active']" class="nav-item">
+            <a [routerLink]="['/todo']" class="nav-link text-dark">Todo</a>
           </li>
           <li class="nav-item">
             <a class="nav-link text-dark" href="/api" target="_blank">API</a>
           </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="status$ | async as s ;else notLoggedIn">
-            <a class="nav-link text-dark" [routerLink]="['/user/dashboard']">{{s}}</a>
+          <li *ngIf="status$ | async as s ;else notLoggedIn" [routerLinkActive]="['link-active']" class="nav-item">
+            <a [routerLink]="['/user/dashboard']" class="nav-link text-dark">{{ s }}</a>
           </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="status$ | async as s ;else notLoggedIn">
-            <a class="nav-link text-dark" [routerLink]="['/authentication/logout']">Logout</a>
+          <li *ngIf="status$ | async as s " [routerLinkActive]="['link-active']" class="nav-item">
+            <a (click)="logout()" class="nav-link text-dark">Logout</a>
           </li>
-          <ng-template #notLoggedIn>
-          <li class="nav-item" [routerLinkActive]="['link-active']" >
-            <a class="nav-link text-dark" [routerLink]="['/authentication/login']">Login</a>
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/authentication/register']">Register</a>
-          </li>
-          </ng-template>
+
+
         </ul>
       </div>
     </div>
   </nav>
+  <ng-template #notLoggedIn>
+    <li [routerLinkActive]="['link-active']" class="nav-item">
+      <a [routerLink]="['/authentication/login']" class="nav-link text-dark">XLogin</a>
+    </li>
+    <li [routerLinkActive]="['link-active']" class="nav-item">
+      <a [routerLink]="['/authentication/register']" class="nav-link text-dark">XRegister</a>
+    </li>
+  </ng-template>
 </header>

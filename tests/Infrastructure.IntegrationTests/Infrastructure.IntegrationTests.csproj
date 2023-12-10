@@ -16,4 +16,8 @@
         <PackageReference Include="coverlet.collector" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageVersion Update="NUnit" Version="4.0.1" />
+    </ItemGroup>
+
 </Project>

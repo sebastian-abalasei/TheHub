@@ -4,6 +4,7 @@ export interface UserForAuthenticationDto {
   email: string | null | undefined;
   password: string | null | undefined;
 }
+
 export interface UserForRegistrationDto {
   firstName: string;
   lastName: string;
@@ -11,6 +12,7 @@ export interface UserForRegistrationDto {
   password: string;
   confirmPassword: string;
 }
+
 export interface UserProfileModel {
   username: string;
   email: string;
@@ -18,6 +20,7 @@ export interface UserProfileModel {
   claims: Array<KeyValue<string, string>>;
   userId: number;
 }
+
 export interface AuthResponseDto {
   username: string;
   email: string;

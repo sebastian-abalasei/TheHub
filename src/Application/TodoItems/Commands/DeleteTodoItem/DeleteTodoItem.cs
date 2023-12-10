@@ -1,5 +1,10 @@
-﻿using TheHub.Application.Common.Interfaces;
+﻿#region
+
+using TheHub.Application.Common.Interfaces;
+using TheHub.Domain.Entities;
 using TheHub.Domain.Events;
+
+#endregion
 
 namespace TheHub.Application.TodoItems.Commands.DeleteTodoItem;
 
@@ -16,7 +21,7 @@ public class DeleteTodoItemCommandHandler : IRequestHandler<DeleteTodoItemComman
 
     public async Task Handle(DeleteTodoItemCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _context.TodoItems
+        TodoItem? entity = await _context.TodoItems
             .FindAsync(new object[] { request.Id }, cancellationToken);
 
         Guard.Against.NotFound(request.Id, entity);
@@ -27,5 +32,4 @@ public class DeleteTodoItemCommandHandler : IRequestHandler<DeleteTodoItemComman
 
         await _context.SaveChangesAsync(cancellationToken);
     }
-
 }

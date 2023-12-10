@@ -12,7 +12,7 @@ export class DashboardComponent implements OnInit {
   constructor(private _router: Router, private _route: ActivatedRoute) {
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
   }
 
 }

@@ -1,5 +1,9 @@
-﻿global using TheHub.Web.AcceptanceTests.Pages;
+﻿#region
+
+global using TheHub.Web.AcceptanceTests.Pages;
 global using BoDi;
 global using FluentAssertions;
 global using Microsoft.Playwright;
 global using TechTalk.SpecFlow;
+
+#endregion

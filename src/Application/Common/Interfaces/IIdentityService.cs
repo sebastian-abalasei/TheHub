@@ -1,4 +1,8 @@
-﻿using TheHub.Application.Common.Models;
+﻿#region
+
+using TheHub.Application.Common.Models;
+
+#endregion
 
 namespace TheHub.Application.Common.Interfaces;
 

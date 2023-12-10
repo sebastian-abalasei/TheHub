@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {AuthState} from "../../api-authorization/auth-state";
 
 @Component({
   selector: 'app-profile',
@@ -6,5 +7,9 @@ import {Component} from '@angular/core';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent {
+
+  constructor( private state:AuthState) {
+
+  }
 
 }

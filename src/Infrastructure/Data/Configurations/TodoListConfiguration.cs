@@ -1,6 +1,10 @@
-﻿using TheHub.Domain.Entities;
+﻿#region
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using TheHub.Domain.Entities;
+
+#endregion
 
 namespace TheHub.Infrastructure.Data.Configurations;
 

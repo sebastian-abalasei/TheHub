@@ -1,6 +1,6 @@
-﻿using System.Data.Common;
-using TheHub.Application.Common.Interfaces;
-using TheHub.Infrastructure.Data;
+﻿#region
+
+using System.Data.Common;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
@@ -8,10 +8,18 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using TheHub.Application.Common.Interfaces;
+using TheHub.Infrastructure.Data;
+
+#endregion
 
 namespace TheHub.Application.FunctionalTests;
 
+#region
+
 using static Testing;
+
+#endregion
 
 public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 {

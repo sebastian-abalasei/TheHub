@@ -4,7 +4,7 @@ public static class TestDatabaseFactory
 {
     public static async Task<ITestDatabase> CreateAsync()
     {
-        var database = new SqliteTestDatabase();
+        SqliteTestDatabase database = new SqliteTestDatabase();
 
         await database.InitialiseAsync();
 

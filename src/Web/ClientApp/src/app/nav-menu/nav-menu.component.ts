@@ -8,15 +8,25 @@ import {LoggedUserInfo} from "../api-authorization/auth-models";
   templateUrl: './nav-menu.component.html',
   styleUrls: ['./nav-menu.component.scss']
 })
-export class NavMenuComponent implements OnInit{
+export class NavMenuComponent implements OnInit {
   isExpanded = false;
   status$: Observable<string>;
-  constructor(private authState: AuthState) {}
-  ngOnInit(): void {
-    this.status$ = this.authState.stateItem$.pipe(
-      map((state:LoggedUserInfo) => state?.email)
-    );
+
+  constructor(private authState: AuthState) {
   }
+
+  ngOnInit() {
+    this.status$ = this.authState.stateItem$.pipe(
+      map((state: LoggedUserInfo) => {
+        return state?.email
+      })
+    );
+    console.log(this.status$);
+  }
+  logout() {
+    this.authState.Logout();
+  }
+
   collapse() {
     this.isExpanded = false;
   }

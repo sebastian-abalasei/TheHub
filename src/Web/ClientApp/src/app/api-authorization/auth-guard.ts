@@ -1,4 +1,4 @@
-﻿import { Injectable } from '@angular/core';
+﻿import {Injectable} from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivate,
@@ -8,17 +8,18 @@ import {
   RouterStateSnapshot,
   UrlSegment,
 } from '@angular/router';
-import { map, Observable } from 'rxjs';
+import {map, Observable} from 'rxjs';
 import {AuthState} from "./auth-state";
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class AuthGuard implements CanActivate, CanActivateChild {
-  constructor(private authState: AuthState, private _router: Router) {}
+  constructor(private authState: AuthState, private _router: Router) {
+  }
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<boolean> {
+  ) {
     // save snapshop url
     this.authState.redirectUrl = state.url;
 
@@ -28,17 +29,15 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   canActivateChild(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<boolean> {
+  ) {
     // save snapshop url
     this.authState.redirectUrl = state.url;
     return this.canActivate(route, state);
   }
 
-  canMatch(route: Route, segments: UrlSegment[]):  Observable<boolean> {
+  canMatch(route: Route, segments: UrlSegment[]) {
     // create the current route from segments
-    const fullPath = segments.reduce((path, currentSegment) => {
-      return `${path}/${currentSegment.path}`;
-    }, '');
+    const fullPath = segments.reduce((path, currentSegment) => `${path}/${currentSegment.path}`, '');
 
     this.authState.redirectUrl = fullPath;
 
@@ -48,7 +47,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   private secure(route: ActivatedRouteSnapshot | Route): Observable<boolean> {
     // tap into auth state to see if user exists
     return this.authState.stateItem$.pipe(
-      map((user) => {
+      map(user => {
         // if user exists let them in, else redirect to login
         if (!user) {
           this._router.navigateByUrl('/authentication/login');

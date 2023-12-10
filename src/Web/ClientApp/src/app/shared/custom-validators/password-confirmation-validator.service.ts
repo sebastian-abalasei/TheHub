@@ -9,8 +9,8 @@ export class PasswordConfirmationValidatorService {
   constructor() {
   }
 
-  public validateConfirmPassword = (passwordControl: AbstractControl): ValidatorFn => {
-    return (confirmationControl: AbstractControl): { [key: string]: boolean } | null => {
+  public validateConfirmPassword = (passwordControl: AbstractControl): ValidatorFn =>
+    (confirmationControl: AbstractControl): { [key: string]: boolean } | null => {
 
       const confirmValue = confirmationControl.value;
       const passwordValue = passwordControl.value;
@@ -24,6 +24,5 @@ export class PasswordConfirmationValidatorService {
       }
 
       return null;
-    };
-  }
+    }
 }

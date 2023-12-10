@@ -1,50 +1,48 @@
-﻿using TheHub.Application.TodoItems.Commands.CreateTodoItem;
+﻿#region
+
+using TheHub.Application.TodoItems.Commands.CreateTodoItem;
 using TheHub.Application.TodoItems.Commands.UpdateTodoItem;
 using TheHub.Application.TodoItems.Commands.UpdateTodoItemDetail;
 using TheHub.Application.TodoLists.Commands.CreateTodoList;
 using TheHub.Domain.Entities;
 using TheHub.Domain.Enums;
 
+#endregion
+
 namespace TheHub.Application.FunctionalTests.TodoItems.Commands;
 
+#region
+
 using static Testing;
+
+#endregion
 
 public class UpdateTodoItemDetailTests : BaseTestFixture
 {
     [Test]
     public async Task ShouldRequireValidTodoItemId()
     {
-        var command = new UpdateTodoItemCommand { Id = 99, Title = "New Title" };
+        UpdateTodoItemCommand command = new UpdateTodoItemCommand { Id = 99, Title = "New Title" };
         await FluentActions.Invoking(() => SendAsync(command)).Should().ThrowAsync<NotFoundException>();
     }
 
     [Test]
     public async Task ShouldUpdateTodoItem()
     {
-        var userId = await RunAsDefaultUserAsync();
+        string userId = await RunAsDefaultUserAsync();
 
-        var listId = await SendAsync(new CreateTodoListCommand
-        {
-            Title = "New List"
-        });
+        int listId = await SendAsync(new CreateTodoListCommand { Title = "New List" });
 
-        var itemId = await SendAsync(new CreateTodoItemCommand
-        {
-            ListId = listId,
-            Title = "New Item"
-        });
+        int itemId = await SendAsync(new CreateTodoItemCommand { ListId = listId, Title = "New Item" });
 
-        var command = new UpdateTodoItemDetailCommand
+        UpdateTodoItemDetailCommand command = new UpdateTodoItemDetailCommand
         {
-            Id = itemId,
-            ListId = listId,
-            Note = "This is the note.",
-            Priority = PriorityLevel.High
+            Id = itemId, ListId = listId, Note = "This is the note.", Priority = PriorityLevel.High
         };
 
         await SendAsync(command);
 
-        var item = await FindAsync<TodoItem>(itemId);
+        TodoItem? item = await FindAsync<TodoItem>(itemId);
 
         item.Should().NotBeNull();
         item!.ListId.Should().Be(command.ListId);

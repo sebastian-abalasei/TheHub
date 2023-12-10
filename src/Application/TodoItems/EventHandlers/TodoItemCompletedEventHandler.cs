@@ -1,5 +1,9 @@
-﻿using TheHub.Domain.Events;
+﻿#region
+
 using Microsoft.Extensions.Logging;
+using TheHub.Domain.Events;
+
+#endregion
 
 namespace TheHub.Application.TodoItems.EventHandlers;
 

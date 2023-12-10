@@ -1,4 +1,8 @@
-﻿using TheHub.Application.WeatherForecasts.Queries.GetWeatherForecasts;
+﻿#region
+
+using TheHub.Application.WeatherForecasts.Queries.GetWeatherForecasts;
+
+#endregion
 
 namespace TheHub.Web.Endpoints;
 

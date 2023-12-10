@@ -1,4 +1,8 @@
-﻿using TheHub.Domain.Entities;
+﻿#region
+
+using TheHub.Domain.Entities;
+
+#endregion
 
 namespace TheHub.Application.Common.Interfaces;
 

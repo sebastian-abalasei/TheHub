@@ -6,12 +6,12 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./not-found.component.css']
 })
 export class NotFoundComponent implements OnInit {
-  public notFoundText: string = `404 SORRY COULDN'T FIND IT!!!`
+  public notFoundText = `404 SORRY COULDN'T FIND IT!!!`;
 
   constructor() {
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
   }
 
 }

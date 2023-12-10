@@ -1,20 +1,25 @@
-﻿using TheHub.Application.Common.Interfaces;
-using TheHub.Domain.Constants;
-using TheHub.Infrastructure.Data;
-using TheHub.Infrastructure.Data.Interceptors;
-using TheHub.Infrastructure.Identity;
+﻿#region
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
+using TheHub.Application.Common.Interfaces;
+using TheHub.Domain.Constants;
+using TheHub.Infrastructure.Data;
+using TheHub.Infrastructure.Data.Interceptors;
+using TheHub.Infrastructure.Identity;
+
+#endregion
 
 namespace Microsoft.Extensions.DependencyInjection;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddInfrastructureServices(this IServiceCollection services,
+        IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("DefaultConnection");
+        string? connectionString = configuration.GetConnectionString("DefaultConnection");
 
         Guard.Against.Null(connectionString, message: "Connection string 'DefaultConnection' not found.");
 

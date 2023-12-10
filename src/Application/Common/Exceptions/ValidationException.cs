@@ -1,4 +1,8 @@
-﻿using FluentValidation.Results;
+﻿#region
+
+using FluentValidation.Results;
+
+#endregion
 
 namespace TheHub.Application.Common.Exceptions;
 

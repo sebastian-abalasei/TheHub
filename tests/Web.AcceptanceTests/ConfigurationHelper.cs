@@ -1,10 +1,16 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿#region
+
+using Microsoft.Extensions.Configuration;
+
+#endregion
 
 namespace TheHub.Web.AcceptanceTests;
 
 public static class ConfigurationHelper
 {
-    private readonly static IConfiguration _configuration;
+    private static readonly IConfiguration _configuration;
+
+    private static string? _baseUrl;
 
     static ConfigurationHelper()
     {
@@ -13,8 +19,6 @@ public static class ConfigurationHelper
             .AddEnvironmentVariables()
             .Build();
     }
-
-    private static string? _baseUrl;
 
     public static string GetBaseUrl()
     {

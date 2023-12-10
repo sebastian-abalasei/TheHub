@@ -1,9 +1,13 @@
-﻿using System.Reflection;
+﻿#region
+
+using System.Reflection;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using TheHub.Application.Common.Interfaces;
 using TheHub.Domain.Entities;
 using TheHub.Infrastructure.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+
+#endregion
 
 namespace TheHub.Infrastructure.Data;
 

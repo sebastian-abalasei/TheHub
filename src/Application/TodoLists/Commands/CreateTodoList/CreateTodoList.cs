@@ -1,5 +1,9 @@
-﻿using TheHub.Application.Common.Interfaces;
+﻿#region
+
+using TheHub.Application.Common.Interfaces;
 using TheHub.Domain.Entities;
+
+#endregion
 
 namespace TheHub.Application.TodoLists.Commands.CreateTodoList;
 
@@ -19,7 +23,7 @@ public class CreateTodoListCommandHandler : IRequestHandler<CreateTodoListComman
 
     public async Task<int> Handle(CreateTodoListCommand request, CancellationToken cancellationToken)
     {
-        var entity = new TodoList();
+        TodoList entity = new TodoList();
 
         entity.Title = request.Title;
 

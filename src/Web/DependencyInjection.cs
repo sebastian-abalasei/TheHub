@@ -1,10 +1,13 @@
-﻿using Azure.Identity;
+﻿#region
+
+using Azure.Identity;
+using Microsoft.AspNetCore.Mvc;
 using TheHub.Application.Common.Interfaces;
 using TheHub.Infrastructure.Data;
 using TheHub.Web.Services;
-using Microsoft.AspNetCore.Mvc;
-
 using ZymLabs.NSwag.FluentValidation;
+
+#endregion
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -27,8 +30,9 @@ public static class DependencyInjection
 
         services.AddScoped(provider =>
         {
-            var validationRules = provider.GetService<IEnumerable<FluentValidationRule>>();
-            var loggerFactory = provider.GetService<ILoggerFactory>();
+            IEnumerable<FluentValidationRule>? validationRules =
+                provider.GetService<IEnumerable<FluentValidationRule>>();
+            ILoggerFactory? loggerFactory = provider.GetService<ILoggerFactory>();
 
             return new FluentValidationSchemaProcessor(provider, validationRules, loggerFactory);
         });
@@ -45,19 +49,19 @@ public static class DependencyInjection
 
 
             // Add the fluent validations schema processor
-            var fluentValidationSchemaProcessor = 
+            FluentValidationSchemaProcessor fluentValidationSchemaProcessor =
                 sp.CreateScope().ServiceProvider.GetRequiredService<FluentValidationSchemaProcessor>();
 
             configure.SchemaSettings.SchemaProcessors.Add(fluentValidationSchemaProcessor);
-
         });
 
         return services;
     }
 
-    public static IServiceCollection AddKeyVaultIfConfigured(this IServiceCollection services, ConfigurationManager configuration)
+    public static IServiceCollection AddKeyVaultIfConfigured(this IServiceCollection services,
+        ConfigurationManager configuration)
     {
-        var keyVaultUri = configuration["KeyVaultUri"];
+        string? keyVaultUri = configuration["KeyVaultUri"];
         if (!string.IsNullOrWhiteSpace(keyVaultUri))
         {
             configuration.AddAzureKeyVault(
