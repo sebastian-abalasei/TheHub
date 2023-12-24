@@ -10,19 +10,10 @@ using TheHub.Domain.Common;
 
 namespace TheHub.Infrastructure.Data.Interceptors;
 
-public class AuditableEntityInterceptor : SaveChangesInterceptor
+public class AuditableEntityInterceptor(
+    IUser user,
+    TimeProvider dateTime) : SaveChangesInterceptor
 {
-    private readonly TimeProvider _dateTime;
-    private readonly IUser _user;
-
-    public AuditableEntityInterceptor(
-        IUser user,
-        TimeProvider dateTime)
-    {
-        _user = user;
-        _dateTime = dateTime;
-    }
-
     public override InterceptionResult<int> SavingChanges(DbContextEventData eventData, InterceptionResult<int> result)
     {
         UpdateEntities(eventData.Context);
@@ -49,15 +40,15 @@ public class AuditableEntityInterceptor : SaveChangesInterceptor
         {
             if (entry.State == EntityState.Added)
             {
-                entry.Entity.CreatedBy = _user.Id;
-                entry.Entity.Created = _dateTime.GetUtcNow();
+                entry.Entity.CreatedBy = user.Id;
+                entry.Entity.Created = dateTime.GetUtcNow();
             }
 
             if (entry.State == EntityState.Added || entry.State == EntityState.Modified ||
                 entry.HasChangedOwnedEntities())
             {
-                entry.Entity.LastModifiedBy = _user.Id;
-                entry.Entity.LastModified = _dateTime.GetUtcNow();
+                entry.Entity.LastModifiedBy = user.Id;
+                entry.Entity.LastModified = dateTime.GetUtcNow();
             }
         }
     }
@@ -70,6 +61,6 @@ public static class Extensions
         return entry.References.Any(r =>
             r.TargetEntry != null &&
             r.TargetEntry.Metadata.IsOwned() &&
-            (r.TargetEntry.State == EntityState.Added || r.TargetEntry.State == EntityState.Modified));
+            r.TargetEntry.State is EntityState.Added or EntityState.Modified);
     }
 }
