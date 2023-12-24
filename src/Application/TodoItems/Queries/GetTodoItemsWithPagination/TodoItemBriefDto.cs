@@ -16,11 +16,14 @@ public class TodoItemBriefDto
 
     public bool Done { get; init; }
 
-    private class Mapping : Profile
+    public static explicit operator TodoItemBriefDto(TodoItem item)
     {
-        public Mapping()
+        return new TodoItemBriefDto()
         {
-            CreateMap<TodoItem, TodoItemBriefDto>();
-        }
+            Id = item.Id,
+            Title = item.Title,
+            Done = item.Done,
+            ListId = item.ListId
+        };
     }
 }

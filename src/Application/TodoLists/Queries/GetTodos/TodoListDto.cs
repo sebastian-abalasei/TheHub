@@ -1,5 +1,6 @@
 ﻿#region
 
+using System.Collections.ObjectModel;
 using TheHub.Domain.Entities;
 
 #endregion
@@ -21,11 +22,15 @@ public class TodoListDto
 
     public IReadOnlyCollection<TodoItemDto> Items { get; init; }
 
-    private class Mapping : Profile
+    public static explicit operator TodoListDto(TodoList list)
     {
-        public Mapping()
+        return new TodoListDto()
         {
-            CreateMap<TodoList, TodoListDto>();
-        }
+            Id = list.Id,
+            Title = list.Title,
+            Colour = list.Colour,
+            Items = list.Items.Select(i => (TodoItemDto)i).ToList()
+            
+        };
     }
 }

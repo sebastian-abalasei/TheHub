@@ -20,12 +20,16 @@ public class TodoItemDto
 
     public string? Note { get; init; }
 
-    private class Mapping : Profile
+    public static explicit operator TodoItemDto(TodoItem item)
     {
-        public Mapping()
+        return new TodoItemDto()
         {
-            CreateMap<TodoItem, TodoItemDto>().ForMember(d => d.Priority,
-                opt => opt.MapFrom(s => (int)s.Priority));
-        }
+            Id = item.Id,
+            Title = item.Title,
+            Note = item.Note,
+            Done = item.Done,
+            Priority = (int)item.Priority,
+            ListId = item.ListId
+        };
     }
 }

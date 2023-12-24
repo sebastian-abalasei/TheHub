@@ -20,12 +20,11 @@ public class
     PaginatedList<TodoItemBriefDto>>
 {
     private readonly IApplicationDbContext _context;
-    private readonly IMapper _mapper;
+    
 
-    public GetTodoItemsWithPaginationQueryHandler(IApplicationDbContext context, IMapper mapper)
+    public GetTodoItemsWithPaginationQueryHandler(IApplicationDbContext context)
     {
         _context = context;
-        _mapper = mapper;
     }
 
     public async Task<PaginatedList<TodoItemBriefDto>> Handle(GetTodoItemsWithPaginationQuery request,
@@ -34,7 +33,7 @@ public class
         return await _context.TodoItems
             .Where(x => x.ListId == request.ListId)
             .OrderBy(x => x.Title)
-            .ProjectTo<TodoItemBriefDto>(_mapper.ConfigurationProvider)
+            .Select(i=>(TodoItemBriefDto)i)
             .PaginatedListAsync(request.PageNumber, request.PageSize);
     }
 }

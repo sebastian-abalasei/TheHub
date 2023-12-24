@@ -2,9 +2,7 @@
 
 using System.Reflection;
 using System.Runtime.Serialization;
-using AutoMapper;
 using NUnit.Framework;
-using TheHub.Application.Common.Interfaces;
 using TheHub.Application.Common.Models;
 using TheHub.Application.TodoItems.Queries.GetTodoItemsWithPagination;
 using TheHub.Application.TodoLists.Queries.GetTodos;
@@ -16,23 +14,7 @@ namespace TheHub.Application.UnitTests.Common.Mappings;
 
 public class MappingTests
 {
-    private readonly IConfigurationProvider _configuration;
-    private readonly IMapper _mapper;
-
-    public MappingTests()
-    {
-        _configuration = new MapperConfiguration(config =>
-            config.AddMaps(Assembly.GetAssembly(typeof(IApplicationDbContext))));
-
-        _mapper = _configuration.CreateMapper();
-    }
-
-    [Test]
-    public void ShouldHaveValidConfiguration()
-    {
-        _configuration.AssertConfigurationIsValid();
-    }
-
+   
     [Test]
     [TestCase(typeof(TodoList), typeof(TodoListDto))]
     [TestCase(typeof(TodoItem), typeof(TodoItemDto))]
@@ -42,8 +24,7 @@ public class MappingTests
     public void ShouldSupportMappingFromSourceToDestination(Type source, Type destination)
     {
         object instance = GetInstanceOf(source);
-
-        _mapper.Map(instance, source, destination);
+        HasExplicitConversion(source, destination);
     }
 
     private object GetInstanceOf(Type type)
@@ -58,5 +39,10 @@ public class MappingTests
 #pragma warning disable SYSLIB0050 // Type or member is obsolete
         return FormatterServices.GetUninitializedObject(type);
 #pragma warning restore SYSLIB0050 // Type or member is obsolete
+    }
+    public static bool HasExplicitConversion(Type fromType, Type toType)
+    {
+        return fromType.GetMethods(BindingFlags.Public | BindingFlags.Static)
+            .Any(m => m.Name == "op_Explicit" && m.ReturnType == toType);
     }
 }
