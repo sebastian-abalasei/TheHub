@@ -1,5 +1,6 @@
 ﻿#region
 
+using System.Security.Claims;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -31,8 +32,7 @@ public static class InitializerExtensions
 public class ApplicationDbContextInitializer(
     ILogger<ApplicationDbContextInitializer> logger,
     ApplicationDbContext context,
-    UserManager<ApplicationUser> userManager,
-    RoleManager<IdentityRole> roleManager)
+    UserManager<ApplicationUser> userManager)
 {
     public async Task InitialiseAsync()
     {
@@ -63,24 +63,38 @@ public class ApplicationDbContextInitializer(
     public async Task TrySeedAsync()
     {
         // Default roles
-        IdentityRole administratorRole = new IdentityRole(Roles.Administrator);
-
-        if (roleManager.Roles.All(r => r.Name != administratorRole.Name))
-        {
-            await roleManager.CreateAsync(administratorRole);
-        }
-
-        // Default users
-        ApplicationUser administrator =
-            new ApplicationUser { UserName = "administrator@localhost", Email = "administrator@localhost" };
+     
+        var administrator =
+            new ApplicationUser
+            {
+                Email = "administrator@localhost",
+                UserName = "administrator@localhost"
+            };
+        var claimRead = new Claim("Admin.Read", "true", ClaimValueTypes.Boolean);
+        var claimWrite = new Claim("Admin.Write", "true", ClaimValueTypes.Boolean);
+        var claimDelete = new Claim("Admin.Delete", "true", ClaimValueTypes.Boolean);
 
         if (userManager.Users.All(u => u.UserName != administrator.UserName))
         {
             await userManager.CreateAsync(administrator, "Administrator1!");
-            if (!string.IsNullOrWhiteSpace(administratorRole.Name))
+            await userManager.AddClaimsAsync(administrator,
+                new List<Claim> { claimRead, claimWrite, claimDelete }.AsEnumerable());
+        }
+
+        var user =
+            new ApplicationUser
             {
-                await userManager.AddToRolesAsync(administrator, new[] { administratorRole.Name });
-            }
+                Email = "user@localhost", UserName = "user@localhost"
+            };
+        claimRead = new Claim("User.Read", "true", ClaimValueTypes.Boolean);
+        claimWrite = new Claim("User.Write", "true", ClaimValueTypes.Boolean);
+        claimDelete = new Claim("User.Delete", "true", ClaimValueTypes.Boolean);
+
+        if (userManager.Users.All(u => u.UserName != user.UserName))
+        {
+            await userManager.CreateAsync(user, "User1!");
+            await userManager.AddClaimsAsync(user,
+                new List<Claim> { claimRead, claimWrite, claimDelete }.AsEnumerable());
         }
 
         // Default data

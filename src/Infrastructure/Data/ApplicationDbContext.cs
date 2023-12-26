@@ -11,7 +11,7 @@ using TheHub.Infrastructure.Identity;
 
 namespace TheHub.Infrastructure.Data;
 
-public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplicationDbContext
+public class ApplicationDbContext : IdentityUserContext<ApplicationUser, ulong>, IApplicationDbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 

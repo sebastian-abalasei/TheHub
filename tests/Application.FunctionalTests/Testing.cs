@@ -1,5 +1,6 @@
 ﻿#region
 
+using System.Security.Claims;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -15,10 +16,10 @@ namespace TheHub.Application.FunctionalTests;
 [SetUpFixture]
 public class Testing
 {
-    private static ITestDatabase _database;
+    private static ITestDatabase _database = null!;
     private static CustomWebApplicationFactory _factory = null!;
     private static IServiceScopeFactory _scopeFactory = null!;
-    private static string? _userId;
+    private static ulong _userId;
 
     [OneTimeSetUp]
     public async Task RunBeforeAnyTests()
@@ -48,42 +49,38 @@ public class Testing
         await mediator.Send(request);
     }
 
-    public static string? GetUserId()
+    public static ulong GetUserId()
     {
         return _userId;
     }
 
-    public static async Task<string> RunAsDefaultUserAsync()
+    public static async Task<ulong> RunAsDefaultUserAsync()
     {
         return await RunAsUserAsync("test@local", "Testing1234!", Array.Empty<string>());
     }
 
-    public static async Task<string> RunAsAdministratorAsync()
+    public static async Task<ulong> RunAsAdministratorAsync()
     {
         return await RunAsUserAsync("administrator@local", "Administrator1234!", new[] { Roles.Administrator });
     }
 
-    public static async Task<string> RunAsUserAsync(string userName, string password, string[] roles)
+    public static async Task<ulong> RunAsUserAsync(string userName, string password, string[] roles)
     {
         using IServiceScope scope = _scopeFactory.CreateScope();
-
+        var claimRead = new Claim("Admin.Read", "true", ClaimValueTypes.Boolean);
+        var claimWrite = new Claim("Admin.Write", "true", ClaimValueTypes.Boolean);
+        var claimDelete = new Claim("Admin.Delete", "true", ClaimValueTypes.Boolean);
         UserManager<ApplicationUser> userManager =
             scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
         ApplicationUser user = new ApplicationUser { UserName = userName, Email = userName };
 
         IdentityResult result = await userManager.CreateAsync(user, password);
-
-        if (roles.Any())
+        var claims = await userManager.GetClaimsAsync(user);
+        if (claims.Any())
         {
-            RoleManager<IdentityRole> roleManager =
-                scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-
-            foreach (string role in roles)
-            {
-                await roleManager.CreateAsync(new IdentityRole(role));
-            }
-
+            await userManager.AddClaimsAsync(user,
+                new List<Claim> { claimRead, claimWrite, claimDelete }.AsEnumerable());
             await userManager.AddToRolesAsync(user, roles);
         }
 
@@ -109,7 +106,7 @@ public class Testing
         {
         }
 
-        _userId = null;
+        _userId = 0;
     }
 
     public static async Task<TEntity?> FindAsync<TEntity>(params object[] keyValues)

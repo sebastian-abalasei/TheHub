@@ -16,5 +16,19 @@ public class CurrentUser : IUser
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public string? Id => _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+    public ulong Id
+    {
+        get
+        {
+            var t = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (t != null)
+            {
+                return ulong.Parse(t);
+            }
+            else
+            {
+                return 0;
+            }
+        }
+    }
 }

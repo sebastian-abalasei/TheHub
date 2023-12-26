@@ -39,7 +39,7 @@ public static class DependencyInjection
 
         services
             .AddDefaultIdentity<ApplicationUser>()
-            .AddRoles<IdentityRole>()
+            // .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>().AddApiEndpoints();
 
         services.AddSingleton(TimeProvider.System);

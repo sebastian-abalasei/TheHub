@@ -29,7 +29,7 @@ public class CreateTodoItemTests : BaseTestFixture
     [Test]
     public async Task ShouldCreateTodoItem()
     {
-        string userId = await RunAsDefaultUserAsync();
+        ulong userId = await RunAsDefaultUserAsync();
 
         int listId = await SendAsync(new CreateTodoListCommand { Title = "New List" });
 
