@@ -12,15 +12,8 @@ namespace TheHub.Application.TodoLists.Queries.GetTodos;
 [Authorize]
 public record GetTodosQuery : IRequest<TodosVm>;
 
-public class GetTodosQueryHandler : IRequestHandler<GetTodosQuery, TodosVm>
+public class GetTodosQueryHandler(IApplicationDbContext context) : IRequestHandler<GetTodosQuery, TodosVm>
 {
-    private readonly IApplicationDbContext _context;
-
-    public GetTodosQueryHandler(IApplicationDbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<TodosVm> Handle(GetTodosQuery request, CancellationToken cancellationToken)
     {
         return new TodosVm
@@ -29,7 +22,7 @@ public class GetTodosQueryHandler : IRequestHandler<GetTodosQuery, TodosVm>
                 .Cast<PriorityLevel>()
                 .Select(p => new LookupDto { Id = (int)p, Title = p.ToString() })
                 .ToList(),
-            Lists = await _context.TodoLists.Include(a=>a.Items)
+            Lists = await context.TodoLists.Include(a=>a.Items)
                 .AsNoTracking()
                 .Select(s => (TodoListDto)s)
                 .ToListAsync(cancellationToken)

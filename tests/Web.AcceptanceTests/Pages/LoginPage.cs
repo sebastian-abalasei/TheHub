@@ -8,7 +8,8 @@ public class LoginPage : BasePage
         Page = page;
     }
 
-    public override string PagePath => $"{BaseUrl}/Identity/Account/Login";
+    // public override string PagePath => $"{BaseUrl}/Identity/Account/Login";
+    public override string PagePath => $"{BaseUrl}/authentication/login";
 
     public override IBrowser Browser { get; }
 
@@ -16,12 +17,12 @@ public class LoginPage : BasePage
 
     public Task SetEmail(string email)
     {
-        return Page.FillAsync("#Input_Email", email);
+        return Page.FillAsync("#email", email);
     }
 
     public Task SetPassword(string password)
     {
-        return Page.FillAsync("#Input_Password", password);
+        return Page.FillAsync("#password", password);
     }
 
     public Task ClickLogin()
@@ -31,7 +32,7 @@ public class LoginPage : BasePage
 
     public Task<string?> ProfileLinkText()
     {
-        return Page.Locator("a[href='/Identity/Account/Manage']").TextContentAsync();
+        return Page.Locator("a[href='/user/dashboard']").TextContentAsync();
     }
 
     public Task<bool> InvalidLoginAttemptMessageVisible()
