@@ -40,7 +40,7 @@ app.MapControllerRoute(
     "default",
     "{controller}/{action=Index}/{id?}");
 
-app.MapRazorPages();
+// app.MapRazorPages();
 
 app.MapFallbackToFile("index.html");
 

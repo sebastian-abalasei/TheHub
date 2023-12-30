@@ -70,15 +70,16 @@ public class ApplicationDbContextInitializer(
                 Email = "administrator@localhost",
                 UserName = "administrator@localhost"
             };
-        var claimRead = new Claim("Admin.Read", "true", ClaimValueTypes.Boolean);
-        var claimWrite = new Claim("Admin.Write", "true", ClaimValueTypes.Boolean);
-        var claimDelete = new Claim("Admin.Delete", "true", ClaimValueTypes.Boolean);
+        var claimAdmin = new Claim(Claims.Administrator, "true", ClaimValueTypes.Boolean);
+        var claimRead = new Claim(Claims.AdminRead, "true", ClaimValueTypes.Boolean);
+        var claimWrite = new Claim(Claims.AdminWrite, "true", ClaimValueTypes.Boolean);
+        var claimDelete = new Claim(Claims.AdminDelete, "true", ClaimValueTypes.Boolean);
 
         if (userManager.Users.All(u => u.UserName != administrator.UserName))
         {
             await userManager.CreateAsync(administrator, "Administrator1!");
             await userManager.AddClaimsAsync(administrator,
-                new List<Claim> { claimRead, claimWrite, claimDelete }.AsEnumerable());
+                new List<Claim> { claimAdmin, claimRead,claimWrite,claimDelete }.AsEnumerable());
         }
 
         var user =
@@ -86,15 +87,16 @@ public class ApplicationDbContextInitializer(
             {
                 Email = "user@localhost", UserName = "user@localhost"
             };
-        claimRead = new Claim("User.Read", "true", ClaimValueTypes.Boolean);
-        claimWrite = new Claim("User.Write", "true", ClaimValueTypes.Boolean);
-        claimDelete = new Claim("User.Delete", "true", ClaimValueTypes.Boolean);
+        var claimUser = new Claim(Claims.User, "true", ClaimValueTypes.Boolean);
+        claimRead = new Claim(Claims.UserRead, "true", ClaimValueTypes.Boolean);
+        claimWrite = new Claim(Claims.UserWrite, "true", ClaimValueTypes.Boolean);
+        claimDelete = new Claim(Claims.UserDelete, "true", ClaimValueTypes.Boolean);
 
         if (userManager.Users.All(u => u.UserName != user.UserName))
         {
             await userManager.CreateAsync(user, "User1!");
             await userManager.AddClaimsAsync(user,
-                new List<Claim> { claimRead, claimWrite, claimDelete }.AsEnumerable());
+                new List<Claim> { claimUser,claimRead,claimWrite,claimDelete }.AsEnumerable());
         }
 
         // Default data

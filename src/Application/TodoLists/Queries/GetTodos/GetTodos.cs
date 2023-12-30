@@ -3,13 +3,14 @@
 using TheHub.Application.Common.Interfaces;
 using TheHub.Application.Common.Models;
 using TheHub.Application.Common.Security;
+using TheHub.Domain.Constants;
 using TheHub.Domain.Enums;
 
 #endregion
 
 namespace TheHub.Application.TodoLists.Queries.GetTodos;
 
-[Authorize]
+[Authorize(Policy = "Administrator")]
 public record GetTodosQuery : IRequest<TodosVm>;
 
 public class GetTodosQueryHandler(IApplicationDbContext context) : IRequestHandler<GetTodosQuery, TodosVm>

@@ -32,7 +32,7 @@ public class AuthorizationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRe
         if (authorizeAttributes.Any())
         {
             // Must be authenticated user
-            if (_user.Id <=0 )
+            if (_user.Id <= 0)
             {
                 throw new UnauthorizedAccessException();
             }
@@ -68,18 +68,42 @@ public class AuthorizationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRe
             // Policy-based authorization
             IEnumerable<AuthorizeAttribute> authorizeAttributesWithPolicies =
                 authorizeAttributes.Where(a => !string.IsNullOrWhiteSpace(a.Policy));
+            
             if (authorizeAttributesWithPolicies.Any())
             {
                 foreach (string policy in authorizeAttributesWithPolicies.Select(a => a.Policy))
                 {
-                    bool authorized = await _identityService.AuthorizeAsync(_user.Id, policy);
+                    var authorized = await _identityService.AuthorizeAsync(_user.Id, policy);
 
                     if (!authorized)
                     {
                         throw new ForbiddenAccessException();
                     }
                 }
+                return await next();
             }
+
+            // Claims-based authorization
+            /*IEnumerable<AuthorizeAttribute> authorizeAttributesWithClaims =
+                authorizeAttributes.Where(a => !string.IsNullOrWhiteSpace(a.Claims));
+            
+            if (authorizeAttributesWithClaims.Any())
+            {
+                foreach (string claim in authorizeAttributesWithClaims.Select(a => a.Claims))
+                {
+                    authorized = await _identityService.AuthorizeAsync(_user.Id, claim);
+
+                    if (authorized)
+                    {
+                        break;
+                    }
+                }
+
+                if (!authorized)
+                {
+                    throw new ForbiddenAccessException();
+                }
+            }*/
         }
 
         // User is authorized / authorization not required

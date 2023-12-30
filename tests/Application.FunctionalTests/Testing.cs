@@ -61,7 +61,7 @@ public class Testing
 
     public static async Task<ulong> RunAsAdministratorAsync()
     {
-        return await RunAsUserAsync("administrator@local", "Administrator1234!", new[] { Roles.Administrator });
+        return await RunAsUserAsync("administrator@local", "Administrator1234!", new[] { Claims.Administrator });
     }
 
     public static async Task<ulong> RunAsUserAsync(string userName, string password, string[] roles)

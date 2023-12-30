@@ -8,8 +8,8 @@ using TheHub.Domain.Constants;
 
 namespace TheHub.Application.TodoLists.Commands.PurgeTodoLists;
 
-[Authorize(Roles = Roles.Administrator)]
-[Authorize(Policy = Policies.CanPurge)]
+// [Authorize(Claims = Claims.Administrator)]
+[Authorize(Policy = Policies.Administrator)]
 public record PurgeTodoListsCommand : IRequest;
 
 public class PurgeTodoListsCommandHandler : IRequestHandler<PurgeTodoListsCommand>

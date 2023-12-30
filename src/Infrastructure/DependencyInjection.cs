@@ -45,9 +45,11 @@ public static class DependencyInjection
         services.AddSingleton(TimeProvider.System);
         services.AddTransient<IIdentityService, IdentityService>();
 
-        services.AddAuthorization(options =>
-            options.AddPolicy(Policies.CanPurge, policy => policy.RequireRole(Roles.Administrator)));
-
+        /*services.AddAuthorization(options =>
+            options.AddPolicy(Policies.CanPurge, policy => policy.RequireRole(Roles.Administrator)));*/
+        services.AddAuthorizationBuilder().
+            AddPolicy(Policies.Administrator, policy => policy.RequireClaim(Claims.Administrator)).
+            AddPolicy(Policies.User, policy => policy.RequireClaim(Claims.User));
         return services;
     }
 }
