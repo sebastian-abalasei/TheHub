@@ -4,13 +4,13 @@ using TheHub.Application.Common.Interfaces;
 
 #endregion
 
-namespace TheHub.Application.TodoLists.Commands.UpdateTodoList;
+namespace TheHub.Application.Questionnaires.Commands.UpdateQuestionnaire;
 
-public class UpdateTodoListCommandValidator : AbstractValidator<UpdateTodoListCommand>
+public class UpdateQuestionnaireCommandValidator : AbstractValidator<UpdateQuestionnaireCommand>
 {
     private readonly IApplicationDbContext _context;
 
-    public UpdateTodoListCommandValidator(IApplicationDbContext context)
+    public UpdateQuestionnaireCommandValidator(IApplicationDbContext context)
     {
         _context = context;
 
@@ -21,7 +21,7 @@ public class UpdateTodoListCommandValidator : AbstractValidator<UpdateTodoListCo
             .WithErrorCode("Unique");
     }
 
-    public async Task<bool> BeUniqueTitle(UpdateTodoListCommand model, string title,
+    public async Task<bool> BeUniqueTitle(UpdateQuestionnaireCommand model, string title,
         CancellationToken cancellationToken)
     {
         return await _context.TodoLists

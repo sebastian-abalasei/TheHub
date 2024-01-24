@@ -11,10 +11,11 @@ using TheHub.Infrastructure.Identity;
 
 namespace TheHub.Infrastructure.Data;
 
-public class ApplicationDbContext : IdentityUserContext<ApplicationUser, ulong>, IApplicationDbContext
+public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+    : IdentityUserContext<ApplicationUser, ulong>(options), IApplicationDbContext
 {
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
-
+    public DbSet<Questionnaire> Questionnaires => Set<Questionnaire>();
+    
     public DbSet<TodoList> TodoLists => Set<TodoList>();
 
     public DbSet<TodoItem> TodoItems => Set<TodoItem>();

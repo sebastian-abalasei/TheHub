@@ -1,16 +1,18 @@
 ﻿#region
 
 using TheHub.Application.Common.Interfaces;
+using TheHub.Application.Questionnaires.Commands.CreateTodoList;
+using TheHub.Application.TodoLists.Commands.CreateTodoList;
 
 #endregion
 
-namespace TheHub.Application.TodoLists.Commands.CreateTodoList;
+namespace TheHub.Application.Questionnaires.Commands.CreateQuestionnaire;
 
-public class CreateTodoListCommandValidator : AbstractValidator<CreateTodoListCommand>
+public class CreateQuestionnaireCommandValidator : AbstractValidator<CreateQuestionnaireCommand>
 {
     private readonly IApplicationDbContext _context;
 
-    public CreateTodoListCommandValidator(IApplicationDbContext context)
+    public CreateQuestionnaireCommandValidator(IApplicationDbContext context)
     {
         _context = context;
 
@@ -23,7 +25,7 @@ public class CreateTodoListCommandValidator : AbstractValidator<CreateTodoListCo
 
     public async Task<bool> BeUniqueTitle(string title, CancellationToken cancellationToken)
     {
-        return await _context.TodoLists
+        return await _context.Questionnaires
             .AllAsync(l => l.Title != title, cancellationToken);
     }
 }
