@@ -25,21 +25,6 @@ public class UpdateTodoListTests : BaseTestFixture
     }
 
     [Test]
-    public async Task ShouldRequireUniqueTitle()
-    {
-        int listId = await SendAsync(new CreateTodoListCommand { Title = "New List" });
-
-        await SendAsync(new CreateTodoListCommand { Title = "Other List" });
-
-        UpdateTodoListCommand command = new UpdateTodoListCommand { Id = listId, Title = "Other List" };
-
-        (await FluentActions.Invoking(() =>
-                    SendAsync(command))
-                .Should().ThrowAsync<ValidationException>().Where(ex => ex.Errors.ContainsKey("Title")))
-            .And.Errors["Title"].Should().Contain("'Title' must be unique.");
-    }
-
-    [Test]
     public async Task ShouldUpdateTodoList()
     {
         ulong userId = await RunAsDefaultUserAsync();

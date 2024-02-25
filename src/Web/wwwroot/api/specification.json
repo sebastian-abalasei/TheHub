@@ -1,5 +1,5 @@
 {
-  "x-generator": "NSwag v14.0.0.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))",
+  "x-generator": "NSwag v14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))",
   "openapi": "3.0.0",
   "info": {
     "title": "TheHub API",
@@ -1026,9 +1026,7 @@
         "additionalProperties": false,
         "properties": {
           "title": {
-            "type": "string",
-            "maxLength": 200,
-            "minLength": 0
+            "type": "string"
           }
         }
       },
@@ -1041,9 +1039,7 @@
             "format": "int32"
           },
           "title": {
-            "type": "string",
-            "maxLength": 200,
-            "minLength": 0
+            "type": "string"
           }
         }
       },
@@ -1107,9 +1103,7 @@
             "format": "int32"
           },
           "title": {
-            "type": "string",
-            "maxLength": 200,
-            "minLength": 0
+            "type": "string"
           }
         }
       },
@@ -1122,9 +1116,7 @@
             "format": "int32"
           },
           "title": {
-            "type": "string",
-            "maxLength": 200,
-            "minLength": 0
+            "type": "string"
           },
           "done": {
             "type": "boolean"
@@ -1258,9 +1250,7 @@
         "additionalProperties": false,
         "properties": {
           "title": {
-            "type": "string",
-            "maxLength": 200,
-            "minLength": 0
+            "type": "string"
           }
         }
       },
@@ -1273,9 +1263,7 @@
             "format": "int32"
           },
           "title": {
-            "type": "string",
-            "maxLength": 200,
-            "minLength": 0
+            "type": "string"
           }
         }
       },
