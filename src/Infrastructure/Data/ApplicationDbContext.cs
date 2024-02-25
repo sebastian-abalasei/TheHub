@@ -14,7 +14,7 @@ namespace TheHub.Infrastructure.Data;
 public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
     : IdentityUserContext<ApplicationUser, ulong>(options), IApplicationDbContext
 {
-    public DbSet<Questionnaire> Questionnaires => Set<Questionnaire>();
+    public DbSet<Quiz> Quizzes => Set<Quiz>();
     
     public DbSet<TodoList> TodoLists => Set<TodoList>();
 

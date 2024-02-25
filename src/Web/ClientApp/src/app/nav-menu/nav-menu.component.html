@@ -37,7 +37,10 @@
             <a class="nav-link text-dark" href="/api" target="_blank">API</a>
           </li>
           <li *ngIf="status$ | async as s ;else notLoggedIn" [routerLinkActive]="['link-active']" class="nav-item">
-            <a [routerLink]="['/user/dashboard']" class="nav-link text-dark">{{ s }}</a>
+
+            <a *ngIf="s.startsWith('administrator')" [routerLink]="['/admin/edit-quiz']" class="nav-link text-dark">{{ s }}</a>
+            <a *ngIf="!s.startsWith('administrator')" [routerLink]="['/user/dashboard']"
+               class="nav-link text-dark">{{ s }}</a>
           </li>
           <li *ngIf="status$ | async as s " [routerLinkActive]="['link-active']" class="nav-item">
             <a (click)="logout()" class="nav-link text-dark">Logout</a>

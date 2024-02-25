@@ -38,6 +38,23 @@ namespace TheHub.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Quizzes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Title = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
+                    Created = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
+                    CreatedBy = table.Column<ulong>(type: "INTEGER", nullable: false),
+                    LastModified = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
+                    LastModifiedBy = table.Column<ulong>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Quizzes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TodoLists",
                 columns: table => new
                 {
@@ -182,6 +199,9 @@ namespace TheHub.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Quizzes");
 
             migrationBuilder.DropTable(
                 name: "TodoItems");

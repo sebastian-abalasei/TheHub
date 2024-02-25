@@ -17,9 +17,15 @@ export class LoginResolve implements Resolve<boolean> {
       map((user: InfoResponse) => {
         // if logged in succesfully, go to last url
         if (user) {
-          this.router.navigateByUrl(
-            this.authState.redirectUrl || '/user/dashboard'
-          );
+          if(user.email.startsWith('administrator')) {
+            this.router.navigateByUrl(
+              this.authState.redirectUrl || '/admin/dashboard'
+            );
+          }else {
+            this.router.navigateByUrl(
+              this.authState.redirectUrl || '/user/dashboard'
+            );
+          }
         }
         // does not really matter, I either go in or navigate away
         return true;

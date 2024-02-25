@@ -375,12 +375,12 @@
         }
       }
     },
-    "/api/Questionnaires": {
+    "/api/Quizzes": {
       "get": {
         "tags": [
-          "Questionnaires"
+          "Quizzes"
         ],
-        "operationId": "GetQuestionnaires",
+        "operationId": "GetQuizzes",
         "responses": {
           "200": {
             "description": "",
@@ -399,15 +399,15 @@
       },
       "post": {
         "tags": [
-          "Questionnaires"
+          "Quizzes"
         ],
-        "operationId": "CreateQuestionnaire",
+        "operationId": "CreateQuiz",
         "requestBody": {
           "x-name": "command",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateQuestionnaireCommand"
+                "$ref": "#/components/schemas/CreateQuizCommand"
               }
             }
           },
@@ -429,12 +429,12 @@
         }
       }
     },
-    "/api/Questionnaires/{id}": {
+    "/api/Quizzes/{id}": {
       "put": {
         "tags": [
-          "Questionnaires"
+          "Quizzes"
         ],
-        "operationId": "UpdateQuestionnaire",
+        "operationId": "UpdateQuiz",
         "parameters": [
           {
             "name": "id",
@@ -1021,7 +1021,7 @@
           }
         }
       },
-      "CreateQuestionnaireCommand": {
+      "CreateQuizCommand": {
         "type": "object",
         "additionalProperties": false,
         "properties": {

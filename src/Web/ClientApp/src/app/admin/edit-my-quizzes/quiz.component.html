@@ -1,0 +1,73 @@
+<h1>Quiz</h1>
+
+<p>This is a complex todo list component.</p>
+
+<p *ngIf="!quizzes"><em>Loading...</em></p>
+
+<div *ngIf="quizzes">
+
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="clearfix">
+        <h2 class="float-start">Lists</h2>
+        <button (click)="showNewQuizModal(newQuizModalTemplate)" class="btn btn-default float-end"
+                title="New List...">
+          <i class="bi bi-journal-plus"></i>
+        </button>
+      </div>
+      <ul class="list-group">
+        <li *ngFor="let quiz of quizzes; index as i"
+            [ngClass]="{ 'active': selectedQuiz == quiz }" class="list-group-item">
+          <div class="clearfix">
+            <div class="float-start">
+              {{ quiz.value }}
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div *ngIf="selectedQuiz" class="col-sm-8">
+      <div class="clearfix">
+        <h2 class="float-start">{{ selectedQuiz.value }}</h2>
+        <button (click)="showNewQuizModal(newQuizModalTemplate)" class="btn btn-default float-end" id="listQuizzes"
+                title="List Quizzes...">
+          <i class="bi bi-three-dots-vertical"></i>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div *ngIf="debug">
+  <pre>{{ quizzes | json }}</pre>
+</div>
+
+<ng-template #newQuizModalTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">New List</h4>
+    <button (click)="newQuizCancelled()" aria-label="Close" class="close btn-close pull-right" type="button">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input (keyup.enter)="addList()" [(ngModel)]="newQuizEditor.title"
+             [ngClass]="{ 'is-invalid': newQuizEditor.error }" class="form-control" id="title"
+             maxlength="200" placeholder="List title..." type="text"/>
+      <div *ngIf="newQuizEditor.error" class="invalid-feedback">
+        {{ newQuizEditor.error }}
+      </div>
+    </div>
+    <div *ngIf="debug">
+      <pre>{{ newQuizEditor | json }}</pre>
+    </div>
+  </div>
+  <div class="modal-footer clearfix">
+    <div class="float-end">
+      <button (click)="newQuizCancelled()" class="btn btn-default">Cancel</button>
+      <button (click)="addList()" class="btn btn-primary">Create</button>
+    </div>
+  </div>
+</ng-template>

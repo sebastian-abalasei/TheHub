@@ -16,7 +16,7 @@ public class GetQuestionnairesQueryHandler(IApplicationDbContext context) : IReq
 {
     public async Task<List<IdValueDto>> Handle(GetQuestionnairesQuery request, CancellationToken cancellationToken)
     {
-        return await context.Questionnaires
+        return await context.Quizzes
             .AsNoTracking()
             .Select(s => new IdValueDto(s.Id, s.Title) )
             .ToListAsync(cancellationToken);

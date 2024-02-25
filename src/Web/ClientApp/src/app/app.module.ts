@@ -67,6 +67,11 @@ const CoreProviders = [
         canActivate: [AuthGuard]
       },
       {
+        path: 'admin',
+        loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
+        canActivate: [AuthGuard]
+      },
+      {
         path: "unauthorized-user",
         component: UnauthorizedUserComponent
       },

@@ -17,7 +17,7 @@ public class QuestionDto
     {
         return new QuestionDto()
         {
-            QuestionnaireId = item.QuestionnaireId,
+            QuestionnaireId = item.QuizId,
             Text = item.Text,
         };
     }

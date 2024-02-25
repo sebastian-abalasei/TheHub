@@ -8,9 +8,9 @@ using TheHub.Domain.Entities;
 
 namespace TheHub.Infrastructure.Data.Configurations;
 
-public class QuestionnaireConfiguration : IEntityTypeConfiguration<Questionnaire>
+public class QuizConfiguration : IEntityTypeConfiguration<Quiz>
 {
-    public void Configure(EntityTypeBuilder<Questionnaire> builder)
+    public void Configure(EntityTypeBuilder<Quiz> builder)
     {
         builder.Property(t => t.Title)
             .HasMaxLength(200)

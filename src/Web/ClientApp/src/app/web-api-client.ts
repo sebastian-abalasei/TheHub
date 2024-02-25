@@ -598,16 +598,16 @@ export class UsersClient implements IUsersClient {
     }
 }
 
-export interface IQuestionnairesClient {
-    getQuestionnaires(): Observable<IdValueDto[]>;
-    createQuestionnaire(command: CreateQuestionnaireCommand): Observable<number>;
-    updateQuestionnaire(id: number, command: UpdateQuestionnaireCommand): Observable<void>;
+export interface IQuizzesClient {
+    getQuizzes(): Observable<IdValueDto[]>;
+    createQuiz(command: CreateQuizCommand): Observable<number>;
+    updateQuiz(id: number, command: UpdateQuestionnaireCommand): Observable<void>;
 }
 
 @Injectable({
     providedIn: 'root'
 })
-export class QuestionnairesClient implements IQuestionnairesClient {
+export class QuizzesClient implements IQuizzesClient {
     private http: HttpClient;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -617,8 +617,8 @@ export class QuestionnairesClient implements IQuestionnairesClient {
         this.baseUrl = baseUrl ?? "";
     }
 
-    getQuestionnaires(): Observable<IdValueDto[]> {
-        let url_ = this.baseUrl + "/api/Questionnaires";
+    getQuizzes(): Observable<IdValueDto[]> {
+        let url_ = this.baseUrl + "/api/Quizzes";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -630,11 +630,11 @@ export class QuestionnairesClient implements IQuestionnairesClient {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetQuestionnaires(response_);
+            return this.processGetQuizzes(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetQuestionnaires(response_ as any);
+                    return this.processGetQuizzes(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<IdValueDto[]>;
                 }
@@ -643,7 +643,7 @@ export class QuestionnairesClient implements IQuestionnairesClient {
         }));
     }
 
-    protected processGetQuestionnaires(response: HttpResponseBase): Observable<IdValueDto[]> {
+    protected processGetQuizzes(response: HttpResponseBase): Observable<IdValueDto[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -672,8 +672,8 @@ export class QuestionnairesClient implements IQuestionnairesClient {
         return _observableOf(null as any);
     }
 
-    createQuestionnaire(command: CreateQuestionnaireCommand): Observable<number> {
-        let url_ = this.baseUrl + "/api/Questionnaires";
+    createQuiz(command: CreateQuizCommand): Observable<number> {
+        let url_ = this.baseUrl + "/api/Quizzes";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(command);
@@ -689,11 +689,11 @@ export class QuestionnairesClient implements IQuestionnairesClient {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCreateQuestionnaire(response_);
+            return this.processCreateQuiz(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processCreateQuestionnaire(response_ as any);
+                    return this.processCreateQuiz(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<number>;
                 }
@@ -702,7 +702,7 @@ export class QuestionnairesClient implements IQuestionnairesClient {
         }));
     }
 
-    protected processCreateQuestionnaire(response: HttpResponseBase): Observable<number> {
+    protected processCreateQuiz(response: HttpResponseBase): Observable<number> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -725,8 +725,8 @@ export class QuestionnairesClient implements IQuestionnairesClient {
         return _observableOf(null as any);
     }
 
-    updateQuestionnaire(id: number, command: UpdateQuestionnaireCommand): Observable<void> {
-        let url_ = this.baseUrl + "/api/Questionnaires/{id}";
+    updateQuiz(id: number, command: UpdateQuestionnaireCommand): Observable<void> {
+        let url_ = this.baseUrl + "/api/Quizzes/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id));
@@ -744,11 +744,11 @@ export class QuestionnairesClient implements IQuestionnairesClient {
         };
 
         return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processUpdateQuestionnaire(response_);
+            return this.processUpdateQuiz(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processUpdateQuestionnaire(response_ as any);
+                    return this.processUpdateQuiz(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<void>;
                 }
@@ -757,7 +757,7 @@ export class QuestionnairesClient implements IQuestionnairesClient {
         }));
     }
 
-    protected processUpdateQuestionnaire(response: HttpResponseBase): Observable<void> {
+    protected processUpdateQuiz(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -1999,10 +1999,10 @@ export interface IIdValueDto {
     value?: string;
 }
 
-export class CreateQuestionnaireCommand implements ICreateQuestionnaireCommand {
+export class CreateQuizCommand implements ICreateQuizCommand {
     title?: string;
 
-    constructor(data?: ICreateQuestionnaireCommand) {
+    constructor(data?: ICreateQuizCommand) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -2017,9 +2017,9 @@ export class CreateQuestionnaireCommand implements ICreateQuestionnaireCommand {
         }
     }
 
-    static fromJS(data: any): CreateQuestionnaireCommand {
+    static fromJS(data: any): CreateQuizCommand {
         data = typeof data === 'object' ? data : {};
-        let result = new CreateQuestionnaireCommand();
+        let result = new CreateQuizCommand();
         result.init(data);
         return result;
     }
@@ -2031,7 +2031,7 @@ export class CreateQuestionnaireCommand implements ICreateQuestionnaireCommand {
     }
 }
 
-export interface ICreateQuestionnaireCommand {
+export interface ICreateQuizCommand {
     title?: string;
 }
 
