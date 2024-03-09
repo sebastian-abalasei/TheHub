@@ -16,11 +16,11 @@
         </button>
       </div>
       <ul class="list-group">
-        <li *ngFor="let quiz of quizzes; index as i"
+        <li (click)="selectQuiz(quiz)" *ngFor="let quiz of quizzes; index as i"
             [ngClass]="{ 'active': selectedQuiz == quiz }" class="list-group-item">
           <div class="clearfix">
             <div class="float-start">
-              {{ quiz.value }}
+              {{ quiz.value }} X
             </div>
           </div>
         </li>
@@ -28,13 +28,30 @@
     </div>
     <div *ngIf="selectedQuiz" class="col-sm-8">
       <div class="clearfix">
-        <h2 class="float-start">{{ selectedQuiz.value }}</h2>
+        <h2 class="float-start">{{ selectedQuiz.title }}</h2>
         <button (click)="showNewQuizModal(newQuizModalTemplate)" class="btn btn-default float-end" id="listQuizzes"
                 title="List Quizzes...">
           <i class="bi bi-three-dots-vertical"></i>
         </button>
       </div>
-
+      <div>
+        <ng-container class="container">
+          <ul class="list-group list-group-flush">
+            <li *ngFor="let question of selectedQuiz.questions; index as i" class="list-group-item">
+              <div class="clearfix">
+                <div class="float-start">
+                  {{ question.text }}
+                </div>
+                <div class="float-end">
+                  <button (click)="deleteQuestion()" class="btn btn-danger" title="Delete Question">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </ng-container>
+      </div>
     </div>
   </div>
 </div>

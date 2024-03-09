@@ -2,6 +2,7 @@
 
 using TheHub.Application.Common.Interfaces;
 using TheHub.Domain.Entities;
+using TheHub.Domain.Quiz.Entities;
 
 #endregion
 
@@ -23,9 +24,7 @@ public class CreateQuizCommandHandler : IRequestHandler<CreateQuizCommand, int>
 
     public async Task<int> Handle(CreateQuizCommand request, CancellationToken cancellationToken)
     {
-        Quiz entity = new();
-
-        entity.Title = request.Title;
+        Quiz entity = new Quiz(request.Title) ;
 
         _context.Quizzes.Add(entity);
 

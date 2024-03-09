@@ -1,6 +1,7 @@
 ﻿#region
 
 using TheHub.Domain.Entities;
+using TheHub.Domain.Quiz.Entities;
 
 #endregion
 

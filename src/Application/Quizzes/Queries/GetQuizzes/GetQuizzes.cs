@@ -6,15 +6,15 @@ using TheHub.Domain.Common;
 
 #endregion
 
-namespace TheHub.Application.Questionnaires.Queries.GetQuestionnaires;
+namespace TheHub.Application.Quizzes.Queries.GetQuizzes;
 
 [Authorize(Policy = "Administrator")]
-public record GetQuestionnairesQuery : IRequest<List<IdValueDto>>;
+public record GetQuizzesQuery : IRequest<List<IdValueDto>>;
 
-public class GetQuestionnairesQueryHandler(IApplicationDbContext context) : IRequestHandler<GetQuestionnairesQuery,
+public class GetQuestionnairesQueryHandler(IApplicationDbContext context) : IRequestHandler<GetQuizzesQuery,
     List<IdValueDto>>
 {
-    public async Task<List<IdValueDto>> Handle(GetQuestionnairesQuery request, CancellationToken cancellationToken)
+    public async Task<List<IdValueDto>> Handle(GetQuizzesQuery request, CancellationToken cancellationToken)
     {
         return await context.Quizzes
             .AsNoTracking()

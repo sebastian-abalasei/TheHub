@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using TheHub.Application.Common.Interfaces;
 using TheHub.Domain.Entities;
+using TheHub.Domain.Quiz.Entities;
 using TheHub.Infrastructure.Identity;
 
 #endregion
