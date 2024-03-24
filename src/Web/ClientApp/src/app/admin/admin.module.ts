@@ -4,6 +4,7 @@ import {RouterModule} from "@angular/router";
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {QuizComponent} from "./edit-my-quizzes/quiz.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {AccordionModule} from 'ngx-bootstrap/accordion';
 
 
 @NgModule({
@@ -12,6 +13,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
   ],
   imports: [
     CommonModule,
+    AccordionModule.forRoot(),
     RouterModule.forChild([
       {path: '', component: DashboardComponent},
       {path: 'dashboard', component: DashboardComponent},

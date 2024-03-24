@@ -2213,6 +2213,7 @@ export interface IQuizAggregate extends IAggregateRoot {
 export class Question implements IQuestion {
     quizId?: number;
     text?: string;
+    isEditable?: boolean;
     answers?: Answer[];
 
     constructor(data?: IQuestion) {
@@ -2228,6 +2229,7 @@ export class Question implements IQuestion {
         if (_data) {
             this.quizId = _data["quizId"];
             this.text = _data["text"];
+            this.isEditable = _data["isEditable"];
             if (Array.isArray(_data["answers"])) {
                 this.answers = [] as any;
                 for (let item of _data["answers"])
@@ -2247,6 +2249,7 @@ export class Question implements IQuestion {
         data = typeof data === 'object' ? data : {};
         data["quizId"] = this.quizId;
         data["text"] = this.text;
+        data["isEditable"] = this.isEditable;
         if (Array.isArray(this.answers)) {
             data["answers"] = [];
             for (let item of this.answers)
@@ -2259,6 +2262,7 @@ export class Question implements IQuestion {
 export interface IQuestion {
     quizId?: number;
     text?: string;
+    isEditable?: boolean;
     answers?: Answer[];
 }
 

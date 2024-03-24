@@ -17,7 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageVersion Update="NUnit" Version="4.0.1" />
+      <PackageVersion Update="NUnit" Version="4.1.0" />
     </ItemGroup>
 
 </Project>

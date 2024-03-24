@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 #endregion
 
-namespace TheHub.Domain.Common;
+namespace TheHub.Domain.Common.Entities;
 
 public abstract class BaseEntity
 {

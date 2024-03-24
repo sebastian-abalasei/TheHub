@@ -1084,6 +1084,9 @@
           "text": {
             "type": "string"
           },
+          "isEditable": {
+            "type": "boolean"
+          },
           "answers": {
             "type": "array",
             "items": {

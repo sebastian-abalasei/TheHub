@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using TheHub.Application.Common.Interfaces;
 using TheHub.Domain.Common;
+using TheHub.Domain.Common.Entities;
 
 #endregion
 

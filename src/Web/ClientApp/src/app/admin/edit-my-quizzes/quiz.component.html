@@ -29,27 +29,47 @@
     <div *ngIf="selectedQuiz" class="col-sm-8">
       <div class="clearfix">
         <h2 class="float-start">{{ selectedQuiz.title }}</h2>
-        <button (click)="showNewQuizModal(newQuizModalTemplate)" class="btn btn-default float-end" id="listQuizzes"
-                title="List Quizzes...">
-          <i class="bi bi-three-dots-vertical"></i>
+        <button (click)="addNewQuestion()" class="btn btn-default float-end" id="listQuizzes"
+                title="Add">
+          <i class="bi bi-plus-circle-dotted"></i>
+        </button>
+        <button (click)="saveQuiz()" class="btn btn-default float-end" id="saveQuiz"
+                title="Add">
+          <i class="bi bi-save2"></i>
         </button>
       </div>
       <div>
         <ng-container class="container">
-          <ul class="list-group list-group-flush">
-            <li *ngFor="let question of selectedQuiz.questions; index as i" class="list-group-item">
-              <div class="clearfix">
-                <div class="float-start">
-                  {{ question.text }}
+          <accordion [closeOthers]="oneAtATime" [isAnimated]="true">
+            <accordion-group *ngFor="let question of selectedQuiz.questions; index as i">
+                <div class="clearfix" accordion-heading (click)="selectQuestion(question)">
+
+                  <div class="float-start" *ngIf="!question.isEditable">
+                    {{ question.text }}
+                  </div>
+
+                  <div class="float-start wi w-75" *ngIf="question.isEditable">
+                    <input (keyup)="onQuestionKeyUp($event)" type="text" class="form-control" placeholder="new question" id="question.Id" [(ngModel)]="question.text"/>
+                  </div>
+                  <div class="float-end">
+                    <button (click)="deleteQuestion()" class="btn btn-danger" title="Delete Question">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </div>
                 </div>
-                <div class="float-end">
-                  <button (click)="deleteQuestion()" class="btn btn-danger" title="Delete Question">
-                    <i class="bi bi-trash"></i>
-                  </button>
+              <div class="clearfix" accordion-body>
+
+                <div class="form-group" *ngFor="let answer of question.answers; index as i">
+                  <div class="d-flex align-items-center m-2">
+                  <input type="checkbox" [(ngModel)]="answer.isCorrect" id="answer.id" [checked]="answer.isCorrect"
+                         style="margin-right: 10px;"/>
+                  <input (keyup)="onAnswerKeyUp($event)"  type="text" class="form-control" id="answer" [(ngModel)]="answer.text"/>
+                </div>
                 </div>
               </div>
-            </li>
-          </ul>
+
+            </accordion-group>
+          </accordion>
         </ng-container>
       </div>
     </div>

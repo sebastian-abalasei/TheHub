@@ -1,4 +1,4 @@
-﻿namespace TheHub.Domain.Common;
+﻿namespace TheHub.Domain.Common.Entities;
 
 public abstract class BaseAuditableEntity : BaseEntity
 {

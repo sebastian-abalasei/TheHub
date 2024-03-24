@@ -1,4 +1,6 @@
-﻿namespace TheHub.Domain.Entities;
+﻿using TheHub.Domain.Common.Entities;
+
+namespace TheHub.Domain.Entities;
 
 public class TodoList : BaseAuditableEntity
 {

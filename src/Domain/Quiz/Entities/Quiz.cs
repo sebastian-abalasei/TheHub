@@ -1,4 +1,6 @@
-﻿namespace TheHub.Domain.Quiz.Entities;
+﻿using TheHub.Domain.Common.Entities;
+
+namespace TheHub.Domain.Quiz.Entities;
 
 public class Quiz : BaseAuditableEntity
 {

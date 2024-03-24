@@ -32,7 +32,7 @@ public class Quizzes : EndpointGroupBase
     {
         return await sender.Send(new GetQuizQuery(id));
     }
-
+    
     public async Task<int> CreateQuiz(ISender sender, CreateQuizCommand command)
     {
         return await sender.Send(command);

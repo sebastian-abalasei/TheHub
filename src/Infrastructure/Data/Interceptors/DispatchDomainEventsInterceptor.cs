@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using TheHub.Domain.Common;
+using TheHub.Domain.Common.Entities;
 
 #endregion
 
